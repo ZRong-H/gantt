@@ -7,6 +7,7 @@
  */
 import Konva from "konva";
 import { isArray } from "lodash-es";
+import dayjs from "dayjs";
 import { EventName } from "../../event";
 import { colorjs } from "../../utils/color";
 import { IContext } from "@/types/render";
@@ -294,6 +295,10 @@ export class HeaderLayer {
             break; // 停止
           }
 
+          const isToday = dayjs(child.date).isSame(dayjs(), "day");
+          const label = isToday ? "今日" : child.hide ? "" : child.label;
+          const textColor = isToday ? "rgba(0, 121, 255, 1)" : undefined;
+
           const cell = this.createCell(
             `cell-${child.date.format("YYYY-MM-DD")}`,
             childStartX,
@@ -301,7 +306,8 @@ export class HeaderLayer {
             _cellWidth,
             rowHeight,
             child.hide ? "transparent" : borderColor,
-            child.hide ? "" : child.label
+            label,
+            textColor
           );
           this.cellHeader.add(cell);
           if (child.hide) {
@@ -326,7 +332,8 @@ export class HeaderLayer {
     width: number,
     height: number,
     borderColor?: string,
-    text?: string
+    text?: string,
+    textColor?: string
   ) {
     const group = new Konva.Group();
     group.x(x);
@@ -370,7 +377,7 @@ export class HeaderLayer {
       fontSize: fontSize,
       fontFamily: this.context.getOptions().header.fontFamily,
       fontStyle: `${this.context.getOptions().header.fontWeight}`,
-      fill: this.context.getOptions().header.color,
+      fill: textColor || this.context.getOptions().header.color,
       align: "center",
       verticalAlign: "middle",
       wrap: "none",
