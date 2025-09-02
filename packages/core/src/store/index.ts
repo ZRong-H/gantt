@@ -41,6 +41,7 @@ export class Store {
     this.timeAxis = new TimeAxis();
     this.timeAxis.init(this.optionManager.getOptions());
 
+
     this.columnManager = new ColumnManager(this.context);
     if (_options.table && _options.table.columns) {
       this.columnManager.init(_options.table.columns);

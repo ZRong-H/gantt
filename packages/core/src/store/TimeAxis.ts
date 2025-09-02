@@ -87,6 +87,7 @@ export class TimeAxis {
   private allWidth: number = 0;
   /** 每一格的宽度 */
   private cellWidth: Record<XGanttUnit, number>;
+  private splitNum: number = 0;
   /** 用户设定的单位 */
   private unit: XGanttUnit = "day";
 
@@ -107,6 +108,10 @@ export class TimeAxis {
     if (this.isAuto) {
       const r = this.allWidth / this.getCellCount();
       return Math.max(isNaN(r) ? 0 : r, width);
+    }
+
+    if (this.splitNum) {
+      return this.allWidth / this.splitNum;
     }
 
     return width;
@@ -211,6 +216,10 @@ export class TimeAxis {
       } else if (isObject(chart.cellWidth)) {
         this.cellWidth = Object.assign(this.cellWidth, chart.cellWidth);
       }
+    }
+
+    if (chart.splitNum) {
+      this.splitNum = chart.splitNum;
     }
 
     this.headerCellFormat = chart.headerCellFormat;

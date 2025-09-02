@@ -42,6 +42,13 @@ export interface IChartOptions {
     | Partial<Record<XGanttUnit, number>>;
 
   /**
+   * 将可视区域分割的数量（即单元格该分成几份）
+   *
+   * @description 此功能会导致 cellWidth 失效。所有 cell 会自动计算宽度
+   */
+  splitNum?: number;
+
+  /**
    * 表头组（上层）格式化
    *
    * @description 字符串：使用 dayjs 的格式化功能参数。支持 {@link https://day.js.org/docs/en/display/format|默认占位符}，以及所有 {@link https://day.js.org/docs/en/plugin/advanced-format|AdvancedFormat} 的占位符

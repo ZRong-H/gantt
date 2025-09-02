@@ -326,6 +326,7 @@ if (ganttContainer) {
         // startTime: "2024-01-05",
         // endTime: "2024-01-15",
         // autoCellWidth: true,
+        splitNum: 7,
       },
       selection: {
         enabled: true
@@ -382,7 +383,7 @@ if (ganttContainer) {
       today: {
         // type: 'block',
         text: {
-          show: true,
+          show: false,
         }
       },
       holiday,

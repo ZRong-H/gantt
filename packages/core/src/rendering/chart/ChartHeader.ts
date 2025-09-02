@@ -180,15 +180,67 @@ export class HeaderLayer {
       }
 
       // 绘制上层单元格
-      const group = this.createCell(
-        `group-${item.date.format("YYYY-MM-DD")}`,
-        startX,
-        0,
-        groupWidth,
-        rowHeight,
-        borderColor,
-        item.label
-      );
+      const group = new Konva.Group({
+        x: startX,
+        y: 0
+      });
+
+      const bg = new Konva.Rect({
+        id: `group-${item.date.format("YYYY-MM-DD")}`,
+        x: 0,
+        y: 0,
+        width: groupWidth,
+        height: rowHeight,
+        fill:
+          this.context.getOptions().header.backgroundColor ||
+          this.context.getOptions().primaryColor,
+        name: "header-cell-bg"
+      });
+      group.add(bg);
+
+      // 右侧边框
+      const rightBorder = new Konva.Line({
+        points: [groupWidth, 0, groupWidth, rowHeight],
+        stroke: borderColor,
+        strokeWidth: 1,
+        name: "header-cell-right-border"
+      });
+      group.add(rightBorder);
+
+      // --- 动态计算文本位置和宽度 ---
+      // 可视区域的起始和结束位置（相对于内容）
+      const visibleContentX_start = -this.offsetX;
+      const visibleContentX_end = visibleContentX_start + this.width;
+
+      // 当前月份组的可见部分的起始和结束位置
+      const visibleGroupX_start = Math.max(startX, visibleContentX_start);
+      const visibleGroupX_end = Math.min(startX + groupWidth, visibleContentX_end);
+      
+      // 可见部分的宽度
+      const visibleGroupWidth = visibleGroupX_end - visibleGroupX_start;
+
+      // 文本的 x 坐标（相对于其父 group）
+      const textRelativeX = visibleGroupX_start - startX;
+
+      const label = new Konva.Text({
+        x: textRelativeX,
+        y: 0,
+        width: visibleGroupWidth,
+        height: rowHeight,
+        text: item.label,
+        fontSize: this.context.getOptions().header.fontSize,
+        fontFamily: this.context.getOptions().header.fontFamily,
+        fontStyle: `${this.context.getOptions().header.fontWeight}`,
+        fill: this.context.getOptions().header.color,
+        align: "center",
+        verticalAlign: "middle",
+        wrap: "none",
+        ellipsis: true,
+        name: "header-cell-text"
+      });
+      group.add(label);
+      // --- 动态计算结束 ---
+
       this.groupHeader.add(group);
 
       // 绘制下层单元格

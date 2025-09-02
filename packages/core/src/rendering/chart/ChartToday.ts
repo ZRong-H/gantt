@@ -171,7 +171,7 @@ export class ChartToday {
       if (!this.triangle) {
         this.triangle = new Konva.RegularPolygon({
           x: left,
-          y: headerHeight - 8,
+          y: headerHeight + 3,
           sides: 3,
           radius: 8,
           fill: color,
@@ -188,7 +188,7 @@ export class ChartToday {
         this.headerLayer.add(this.triangle);
         this.triangle.moveToTop();
 
-        this.arrowAnimation.start();
+        // this.arrowAnimation.start(); // 关闭动画
       } else {
         this.triangle.x(left);
         this.triangle.fill(color);

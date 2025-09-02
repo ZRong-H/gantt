@@ -151,7 +151,8 @@ const DEFAULT_OPTIONS: () => IGanttOptions = () => ({
   },
   chart: {
     autoCellWidth: false,
-    cellWidth: "normal"
+    cellWidth: "normal",
+    splitNum: 7,
   },
   primaryColor: "#eca710",
   border: {
