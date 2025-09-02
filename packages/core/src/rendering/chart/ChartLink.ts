@@ -577,8 +577,15 @@ export class LinkGroup {
       0.05 + y + rowHeight * fromTask.flatIndex
     ];
 
+    const fromXWithGap = fromEnd + gap;
+    const toXWithGap = toX - gap;
+
     // 过程点
-    {
+    if (fromXWithGap < toXWithGap) {
+      const middleX = (fromXWithGap + toXWithGap) / 2;
+      points.push(middleX, 0.05 + y + rowHeight * fromTask.flatIndex);
+      points.push(middleX, y + rowHeight * toTask.flatIndex);
+    } else {
       const distance: number = link.distance
         ? parseInt(link.distance)
         : this.context.getOptions().links.distance;
