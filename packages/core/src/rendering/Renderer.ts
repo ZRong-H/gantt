@@ -14,6 +14,7 @@ import { Table } from "./table";
 import { Chart } from "./chart";
 import { MiddleResizeLine } from "./other/MiddleResizeLine";
 import { GuideLine } from "./other/GuideLine";
+import { Tooltip } from "./other/Tooltip";
 import { colorjs } from "../utils/color";
 import { IContext } from "@/types/render";
 import type { Task } from "@/models/Task";
@@ -62,6 +63,7 @@ export class Renderer {
 
     // 初始化全局指示线，使用甘特图容器作为指示线容器
     new GuideLine(this.context, this.container);
+    new Tooltip(this.context, this.container);
 
     this.middleLine = new MiddleResizeLine(this.context, this.rootElement);
 
