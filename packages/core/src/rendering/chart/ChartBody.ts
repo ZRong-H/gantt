@@ -12,6 +12,7 @@ import { ChartRow } from "./ChartRow";
 import { generateId } from "../../utils/id";
 import { IContext } from "@/types/render";
 import { type Task } from "@/models/Task";
+import { parseNumberWithPercent } from "../../utils/helpers";
 
 export class BodyGroup {
   private rowsGroup: Konva.Group; // 包含所有行的容器
@@ -70,8 +71,8 @@ export class BodyGroup {
     this.offsetX = x;
     this.offsetY = y;
 
-    this.rowsGroup.x(x);
-    this.rowsGroup.y(y);
+    this.rowsGroup.position({ x, y });
+    this.rowBgGroup.position({ x, y });
 
     // 更新高亮矩形的位置（如果存在）
     this.updateHighlightPosition(diff);
@@ -89,6 +90,8 @@ export class BodyGroup {
     const currentKey = generateId();
 
     this.rowBgGroup.destroyChildren();
+
+    this.renderGroupBackgrounds(tasks);
 
     tasks.forEach((task, index) => {
       const rowId = `chart-row-${task.id}`;
@@ -121,7 +124,7 @@ export class BodyGroup {
       // 创建行背景矩形
       const rowBg = new Konva.Rect({
         x: 0,
-        y: y + this.offsetY,
+        y: y,
         width: this.width,
         height: rowHeight,
         fill: this.context.store.getOptionManager().getRowBackgroundColor(task),
@@ -167,6 +170,93 @@ export class BodyGroup {
     this.stage.on("click", this.handleClick.bind(this));
     this.stage.on("dblclick", this.handleDblClick.bind(this));
     this.stage.on("contextmenu", this.handleContextMenu.bind(this));
+  }
+
+  private renderGroupBackgrounds(tasks: Task[]): void {
+    const groups: { [parentId: string]: Task[] } = {};
+
+    // Group tasks by their summary parent
+    tasks.forEach(task => {
+      if (task.parent && task.parent.isSummary() && task.parent.expanded) {
+        if (!groups[task.parent.id]) {
+          groups[task.parent.id] = [];
+        }
+        groups[task.parent.id].push(task);
+      }
+    });
+
+    const rowHeight = this.context.getOptions().row.height;
+    const headerHeight = this.context.getOptions().header.height;
+
+    for (const parentId in groups) {
+      const children = groups[parentId].sort((a, b) => a.flatIndex - b.flatIndex);
+      if (children.length === 0) continue;
+
+      let minX = Infinity;
+      let maxX = -Infinity;
+
+      const firstChild = children[0];
+      const lastChild = children[children.length - 1];
+
+      const parentTask = firstChild.parent;
+      if (!parentTask) continue;
+
+      const barHeightRaw = this.context.getOptions().bar.height;
+      const unpackFunc = (val: any, task: Task) =>
+        this.context.store.getOptionManager().unpackFunc(val, task);
+      const barHeight = parseNumberWithPercent(
+        unpackFunc(barHeightRaw, firstChild),
+        rowHeight
+      );
+      const barYOffset = (rowHeight - barHeight) / 2;
+
+      const firstChildRowY = firstChild.flatIndex * rowHeight + headerHeight;
+      const lastChildRowY = lastChild.flatIndex * rowHeight + headerHeight;
+
+      const minY = firstChildRowY + barYOffset;
+      const height = lastChildRowY - firstChildRowY + barHeight;
+
+      children.forEach(child => {
+        if (child.startTime && child.endTime) {
+          const startX = this.context.store
+            .getTimeAxis()
+            .getTimeLeft(child.startTime);
+          const endX = this.context.store
+            .getTimeAxis()
+            .getTimeLeft(child.endTime);
+          if (startX < minX) minX = startX;
+          if (endX > maxX) maxX = endX;
+        }
+      });
+
+      const summaryColor = unpackFunc(
+        this.context.getOptions().summary.color,
+        parentTask
+      );
+      const barColor = unpackFunc(
+        this.context.getOptions().bar.backgroundColor,
+        parentTask
+      );
+      const primaryColor = this.context.getOptions().primaryColor;
+      const baseColor = summaryColor || barColor || primaryColor;
+      const fillColor = colorjs(baseColor).alpha(0.08).toHex();
+      const borderColor = colorjs(baseColor).alpha(0.12).toHex();
+
+      if (isFinite(minX) && isFinite(minY)) {
+        const groupBg = new Konva.Rect({
+          x: minX,
+          y: minY,
+          width: maxX - minX,
+          height: height,
+          fill: fillColor,
+          stroke: borderColor,
+          strokeWidth: 2,
+          listening: false,
+          name: `group-bg-${parentId}`
+        });
+        this.rowBgGroup.add(groupBg);
+      }
+    }
   }
 
   /**

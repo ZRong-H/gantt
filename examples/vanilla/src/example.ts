@@ -345,6 +345,7 @@ if (ganttContainer) {
       bar: {
         height: "50%",
         field: "name",
+        radius: 50,
         move: {
           enabled: true,
           // lock: true,
@@ -369,7 +370,7 @@ if (ganttContainer) {
         }
       },
       weekend: {
-        show: true,
+        show: false,
         // pattern: "stripe",
         backgroundColor: "#f0f0f0",
         opacity: 0.2
@@ -386,7 +387,7 @@ if (ganttContainer) {
           show: false,
         }
       },
-      holiday,
+      // holiday,
       flag
     });
     console.log("XGantt instance created:", gantt);

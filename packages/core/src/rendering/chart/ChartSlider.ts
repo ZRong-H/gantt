@@ -386,6 +386,30 @@ export class ChartSlider {
         cornerRadius: cornerRadius,
       });
 
+      let leftDot = this.slider.findOne('.left-dot') as Konva.Circle;
+      if (!leftDot) {
+        leftDot = new Konva.Circle({
+          x: (height / 5) * 3,
+          y: height / 2,
+          radius: height / 4,
+          fill: 'white',
+          name: 'left-dot'
+        });
+        this.slider.add(leftDot);
+      }
+
+      let rightDot = this.slider.findOne('.right-dot') as Konva.Circle;
+      if (!rightDot) {
+        rightDot = new Konva.Circle({
+          x: sliderWidth - (height / 5) * 3,
+          y: height / 2,
+          radius: height / 4,
+          fill: 'white',
+          name: 'right-dot'
+        });
+        this.slider.add(rightDot);
+      }
+
       this.renderProgress(sliderWidth, height);
 
       const resizeIcon = this.context.getOptions().bar.move.single?.icon;
