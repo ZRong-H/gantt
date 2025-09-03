@@ -191,15 +191,29 @@ export class TableCell {
       expandContainer.style.width = "14px";
       expandContainer.style.height = "100%";
       expandContainer.style.cursor = "pointer";
-      expandContainer.innerHTML = `<svg t="1746693752280" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2612" width="14" height="14"><path d="M724.48 521.728c-1.8432 7.7824-5.7344 14.848-11.3664 20.48l-341.9136 342.016c-16.6912 16.6912-43.7248 16.6912-60.3136 0s-16.6912-43.7248 0-60.3136L622.6944 512 310.8864 200.0896c-16.6912-16.6912-16.6912-43.7248 0-60.3136 16.6912-16.6912 43.7248-16.6912 60.3136 0l341.9136 341.9136c10.8544 10.8544 14.6432 26.112 11.3664 40.0384z" fill="currentColor" p-id="2613"></path></svg>`;
-      expandContainer.style.transform = this.task.expanded
-        ? "rotate(90deg)"
-        : "";
+      // 创建圆形加号/减号图标的函数
+      const getCircleIcon = (expanded: boolean) => {
+        return expanded
+          ? `<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="7" cy="7" r="6" fill="white" stroke="rgba(153, 153, 153, 1)" stroke-width="1"/>
+              <line x1="4" y1="7" x2="10" y2="7" stroke="rgba(153, 153, 153, 1)" stroke-width="1.5"/>
+            </svg>`
+          : `<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="7" cy="7" r="6" fill="white" stroke="rgba(153, 153, 153, 1)" stroke-width="1"/>
+              <line x1="4" y1="7" x2="10" y2="7" stroke="rgba(153, 153, 153, 1)" stroke-width="1.5"/>
+              <line x1="7" y1="4" x2="7" y2="10" stroke="rgba(153, 153, 153, 1)" stroke-width="1.5"/>
+            </svg>`;
+      };
+      
+      // 设置初始图标
+      expandContainer.innerHTML = getCircleIcon(this.task.expanded!);
 
       expandContainer.addEventListener("click", e => {
         e.stopPropagation(); // 阻止事件冒泡，避免触发行点击事件
         // 点击展开/收起子层
         this.context.store.getDataManager().expandTask(this.task.id, false);
+        // 更新图标
+        expandContainer.innerHTML = getCircleIcon(this.task.expanded!);
       });
 
       cellHandler.appendChild(expandContainer);

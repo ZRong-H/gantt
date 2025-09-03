@@ -136,4 +136,11 @@ export interface ITableOptions {
    * 列配置
    */
   columns?: ITableColumn[];
+
+  /**
+   * 扩展列配置。当图表被折叠时显示的列配置
+   * 
+   * @description 当chart折叠时，table会显示expendColumns中配置的列，而不是columns中的列
+   */
+  expendColumns?: ITableColumn[];
 }

@@ -63,4 +63,9 @@ export interface IChartOptions {
    * @description 函数：可以根据当前日期和单位，返回自定义的格式化字符串。如果函数返回为空，则回退到默认格式化
    */
   headerCellFormat?: string | ((date: Date, unit: XGanttUnit) => string);
+
+  /**
+   * 允许收起图表。开启后，中线会显示一个折叠按钮，点击后可以收起图表
+   */
+  collapsible?: boolean;
 }

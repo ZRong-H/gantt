@@ -9,7 +9,10 @@
 import { IContext } from "@/types/render";
 import { EventName } from "../../event";
 
-const leftIcon = '<svg style="transition: all 0.3s" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M8.293 12.707a1 1 0 0 1 0-1.414l5.657-5.657a1 1 0 1 1 1.414 1.414L10.414 12l4.95 4.95a1 1 0 0 1-1.414 1.414z"/></g></svg>';
+// 蓝色三角形图标 - 向左
+const leftTriangleIcon = '<svg style="transition: all 0.3s" xmlns="http://www.w3.org/2000/svg" width="4.5" height="5.5" viewBox="0 0 4.5 5.5"><polygon fill="rgba(39, 111, 245, 1)" points="4.5,0 0,2.75 4.5,5.5"/></svg>';
+// 蓝色三角形图标 - 向右
+const rightTriangleIcon = '<svg style="transition: all 0.3s" xmlns="http://www.w3.org/2000/svg" width="4.5" height="5.5" viewBox="0 0 4.5 5.5"><polygon fill="rgba(39, 111, 245, 1)" points="0,0 4.5,2.75 0,5.5"/></svg>';
 
 export class MiddleResizeLine {
   private line: HTMLDivElement;
@@ -17,13 +20,14 @@ export class MiddleResizeLine {
   private initialWidth: number = 0;
 
   private collapseButton: HTMLDivElement | null = null;
+  private chartCollapseButton: HTMLDivElement | null = null;
 
   constructor(private root: IContext, private container: HTMLElement) {
     // 创建一个用于包含表格组件的容器
     this.line = document.createElement("div");
     this.line.className = "x-gantt-middle-resize-line";
     this.line.style.position = "absolute";
-    this.line.style.zIndex = "99";
+    this.line.style.zIndex = "9999";
     this.line.style.width = "5px";
     this.line.style.height = "100%";
     this.line.style.borderLeft = "2px solid";
@@ -34,8 +38,45 @@ export class MiddleResizeLine {
     );
     this.line.style.cursor = "col-resize";
 
-    // 添加收起按钮
-    // if (!!this.root.store.getOptionManager().getOptions().table.collapsible) {
+    // 根据extendColumns配置决定显示哪个按钮
+    const tableOptions = this.root.store.getOptionManager().getOptions().table;
+    const hasExtendColumns = tableOptions.expendColumns && tableOptions.expendColumns.length > 0;
+
+    if (hasExtendColumns) {
+      // 如果有extendColumns，只显示折叠chart的按钮
+      this.chartCollapseButton = document.createElement("div");
+      this.chartCollapseButton.className = "x-gantt-chart-collapse-button";
+      this.chartCollapseButton.style.position = "absolute";
+      this.chartCollapseButton.style.top = "50%";
+      // 初始状态下，chart未折叠，按钮紧贴middleLine右边
+      this.chartCollapseButton.style.left = "0px";
+      this.chartCollapseButton.style.right = "auto";
+      this.chartCollapseButton.style.transform = "translateY(-50%)";
+      this.chartCollapseButton.style.cursor = "pointer";
+      this.chartCollapseButton.style.zIndex = "9999";
+
+      // 设置chart折叠按钮的样式
+      this.chartCollapseButton.style.width = "12px";
+      this.chartCollapseButton.style.height = "12px";
+      this.chartCollapseButton.style.backgroundColor = "#fff";
+      this.chartCollapseButton.style.border = "1px solid rgba(229, 229, 229, 1)";
+      // 初始状态下，chart未折叠，按钮右侧带圆角
+      this.chartCollapseButton.style.borderRadius = "0 6px 6px 0";
+      this.chartCollapseButton.style.display = "flex";
+      this.chartCollapseButton.style.alignItems = "center";
+      this.chartCollapseButton.style.justifyContent = "center";
+      // 设置chart折叠按钮的图标
+      this.chartCollapseButton.innerHTML = rightTriangleIcon;
+
+      // 点击chart折叠按钮时触发事件
+      this.chartCollapseButton.addEventListener("click", e => {
+        e.stopPropagation();
+        this.root.store.getColumnManager().toggleChartCollapse();
+      });
+
+      this.line.appendChild(this.chartCollapseButton);
+    } else {
+      // 如果没有extendColumns，只显示折叠table的按钮
       this.collapseButton = document.createElement("div");
       this.collapseButton.className = "x-gantt-collapse-button";
       this.collapseButton.style.position = "absolute";
@@ -43,18 +84,19 @@ export class MiddleResizeLine {
       this.collapseButton.style.left = "0";
       this.collapseButton.style.transform = "translateY(-50%)";
       this.collapseButton.style.cursor = "pointer";
+      this.collapseButton.style.zIndex = "9999";
 
       // 设置折叠按钮的样式
-      this.collapseButton.style.width = "16px";
-      this.collapseButton.style.height = "30px";
+      this.collapseButton.style.width = "12px";
+      this.collapseButton.style.height = "12px";
       this.collapseButton.style.backgroundColor = "#fff";
+      this.collapseButton.style.border = "1px solid rgba(229, 229, 229, 1)";
       this.collapseButton.style.borderRadius = "0 6px 6px 0";
-      this.collapseButton.style.boxShadow = "0 0 2px rgba(0, 0, 0, 0.2)";
       this.collapseButton.style.display = "flex";
       this.collapseButton.style.alignItems = "center";
       this.collapseButton.style.justifyContent = "center";
       // 设置折叠按钮的图标
-      this.collapseButton.innerHTML = leftIcon;
+      this.collapseButton.innerHTML = leftTriangleIcon;
 
       // 点击折叠按钮时触发事件
       this.collapseButton.addEventListener("click", e => {
@@ -63,7 +105,7 @@ export class MiddleResizeLine {
       });
 
       this.line.appendChild(this.collapseButton);
-    // }
+    }
 
     this.container.appendChild(this.line);
 
@@ -78,9 +120,26 @@ export class MiddleResizeLine {
     // 更新图标
     if (this.collapseButton) {
       if (this.root.store.getColumnManager().isCollapsed()) {
-        this.collapseButton.querySelector('svg')!.style.transform = "rotate(180deg)";
+        this.collapseButton.innerHTML = rightTriangleIcon;
       } else {
-        this.collapseButton.querySelector('svg')!.style.transform = "rotate(0deg)";
+        this.collapseButton.innerHTML = leftTriangleIcon;
+      }
+    }
+
+    // 更新chart折叠按钮图标、圆角和位置
+    if (this.chartCollapseButton) {
+      if (this.root.store.getColumnManager().isChartCollapsed()) {
+        this.chartCollapseButton.innerHTML = leftTriangleIcon;
+        // chart折叠时，按钮左侧带圆角，位置在middleLine左边
+        this.chartCollapseButton.style.borderRadius = "6px 0 0 6px";
+        this.chartCollapseButton.style.left = "-13px";
+        this.chartCollapseButton.style.right = "auto";
+      } else {
+        this.chartCollapseButton.innerHTML = rightTriangleIcon;
+        // chart未折叠时，按钮右侧带圆角，紧贴middleLine右边
+        this.chartCollapseButton.style.borderRadius = "0 6px 6px 0";
+        this.chartCollapseButton.style.left = "0px";
+        this.chartCollapseButton.style.right = "auto";
       }
     }
   }

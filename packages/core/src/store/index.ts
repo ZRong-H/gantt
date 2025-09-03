@@ -44,7 +44,7 @@ export class Store {
 
     this.columnManager = new ColumnManager(this.context);
     if (_options.table && _options.table.columns) {
-      this.columnManager.init(_options.table.columns);
+      this.columnManager.init(_options.table.columns, _options.table.expendColumns);
     }
 
     this.dataManager = new DataManager(this, this.context.event);

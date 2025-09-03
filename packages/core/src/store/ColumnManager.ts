@@ -53,6 +53,8 @@ export interface MergeInfo {
 export class ColumnManager {
   /** 源列数据 */
   private sourceColumns: ITableColumn[] = [];
+  /** 扩展列数据，当图表折叠时使用 */
+  private sourceExpendColumns: ITableColumn[] = [];
   /** 处理后的所有列数据 */
   private columns: IColumn[] = [];
   /** 叶子列数据，只包含最终显示的列 */
@@ -73,21 +75,33 @@ export class ColumnManager {
    */
   private collapseTable = false;
 
+  /**
+   * 收起图表
+   */
+  private collapseChart = false;
+
   constructor(private context: IContext) { }
 
   /**
    * 初始化列数据
    */
-  public init(columns?: ITableColumn[]): void {
+  public init(columns?: ITableColumn[], expendColumns?: ITableColumn[]): void {
     if (columns?.length) {
       this.sourceColumns = columns;
+    }
+    
+    if (expendColumns?.length) {
+      this.sourceExpendColumns = expendColumns;
     }
 
     this.columns = [];
     this.leafColumns = [];
 
+    // 根据图表折叠状态选择使用哪个列配置
+    const currentColumns = this.collapseChart ? this.sourceExpendColumns : this.sourceColumns;
+    
     // 处理列数据
-    this.processColumns(this.sourceColumns, this.columns);
+    this.processColumns(currentColumns, this.columns);
   }
 
   /**
@@ -299,5 +313,32 @@ export class ColumnManager {
 
   isCollapsed() {
     return this.collapseTable;
+  }
+
+  toggleChartCollapse() {
+    this.collapseChart = !this.collapseChart;
+    
+    // 重新处理列数据
+    this.refreshColumns();
+    
+    this.context.event.emit(EventName.TOGGLE_CHART_COLLAPSE);
+  }
+
+  /**
+   * 刷新列数据，根据当前图表折叠状态选择合适的列配置
+   */
+  private refreshColumns(): void {
+    this.columns = [];
+    this.leafColumns = [];
+    
+    // 根据图表折叠状态选择使用哪个列配置
+    const currentColumns = this.collapseChart ? this.sourceExpendColumns : this.sourceColumns;
+    
+    // 处理列数据
+    this.processColumns(currentColumns, this.columns);
+  }
+
+  isChartCollapsed() {
+    return this.collapseChart;
   }
 }

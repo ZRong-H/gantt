@@ -171,6 +171,10 @@ export class Renderer {
     this.context.event.on(EventName.TOGGLE_COLLAPSE, () => {
       this.renderScheduler.scheduleTask("CHART_OFFSET_CHANGE", [false]);
     });
+
+    this.context.event.on(EventName.TOGGLE_CHART_COLLAPSE, () => {
+      this.renderScheduler.scheduleTask("CHART_OFFSET_CHANGE", [false]);
+    });
   }
 
   /**
@@ -261,12 +265,13 @@ export class Renderer {
     this.rootElement.style.height = this.height ? `${this.height}px` : "100%";
 
     // 设置容器宽高
-    const tableWidth = this.context.store.getColumnManager().getTotalWidth();
+    const isChartCollapsed = this.context.store.getColumnManager().isChartCollapsed();
+    const tableWidth = isChartCollapsed ? this.width : this.context.store.getColumnManager().getTotalWidth();
     this.tableContainer.style.width = `${tableWidth}px`;
     this.tableContainer.style.height = this.height
       ? `${this.height}px`
       : "100%";
-    const chartWidth = this.width - tableWidth;
+    const chartWidth = isChartCollapsed ? 0 : this.width - tableWidth;
     this.chartContainer.style.width = `${chartWidth}px`;
     this.chartContainer.style.height = this.height
       ? `${this.height}px`
@@ -274,7 +279,9 @@ export class Renderer {
 
     // 更新图表可视区域大小
     this.chart.resize(chartWidth, this.height);
-
+    this.table.updateWidth();
+    // console.log('this.table.width')
+    // this.performRender(true)
     // 更新中线的位置
     this.middleLine.setOffset(tableWidth);
 

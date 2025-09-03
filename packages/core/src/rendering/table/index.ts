@@ -23,7 +23,8 @@ export class Table {
     this.tableContainer.style.position = "relative";
     this.tableContainer.style.width = "100%";
     this.tableContainer.style.height = "100%";
-    this.tableContainer.style.overflow = "hidden"; // 不允许滚动，由外部虚拟滚动条控制
+    // 移除overflow限制，允许横向滚动
+    // this.tableContainer.style.overflow = "hidden"; // 不允许滚动，由外部虚拟滚动条控制
 
     // 使用flex布局，使表头和表格主体垂直排列
     this.tableContainer.style.display = "flex";
@@ -37,6 +38,9 @@ export class Table {
 
     // 监听事件
     this.listenEvents();
+    
+    // 添加滚动同步
+    this.setupScrollSync();
   }
 
   public render(top: number, tasks: Task[]) {
@@ -67,6 +71,41 @@ export class Table {
 
     this.context.event.on(EventName.UPDATE_TABLE_BODY, () => {
       this.tableBody.update();
+    });
+
+    // 监听图表折叠事件，重新渲染表格
+    this.context.event.on(EventName.TOGGLE_CHART_COLLAPSE, () => {
+      this.tableHeader.render();
+      this.tableBody.update();
+    });
+  }
+
+  private setupScrollSync() {
+    // 获取header和body的DOM元素
+    const headerElement = this.tableContainer.querySelector('.x-gantt-table-header') as HTMLElement;
+    const bodyElement = this.tableContainer.querySelector('.x-gantt-table-body') as HTMLElement;
+    
+    if (!headerElement || !bodyElement) {
+      return;
+    }
+
+    let isHeaderScrolling = false;
+    let isBodyScrolling = false;
+
+    // 监听header的滚动事件
+    headerElement.addEventListener('scroll', () => {
+      if (isBodyScrolling) return;
+      isHeaderScrolling = true;
+      bodyElement.scrollLeft = headerElement.scrollLeft;
+      setTimeout(() => { isHeaderScrolling = false; }, 10);
+    });
+
+    // 监听body的滚动事件
+    bodyElement.addEventListener('scroll', () => {
+      if (isHeaderScrolling) return;
+      isBodyScrolling = true;
+      headerElement.scrollLeft = bodyElement.scrollLeft;
+      setTimeout(() => { isBodyScrolling = false; }, 10);
     });
   }
 }

@@ -276,29 +276,212 @@ if (ganttContainer) {
               if (v === "Task 21") return { col: 2, row: 10 };
             },
             align: "left",
-            // customStyle: {
-            //   display: "flex",
-            //   "align-items": "center"
-            // },
             render: row => {
               return row.level === 1
                 ? row.data.name
                 : `<div style="color: red">${row.data.name}</div>`;
             }
           },
+        ],
+        expendColumns: [
           {
-            label: "时间",
+            label: "Task Name",
+            width: 180,
+            field: "name",
+            align: "left",
+            render: row => {
+              const level = row.level;
+              const indent = (level - 1) * 20;
+              return `<div style="padding-left: ${indent}px; display: flex; align-items: center;">
+                      <span style="font-weight: ${level === 1 ? 'bold' : 'normal'}; color: ${level === 1 ? '#1890ff' : '#333'};">${row.data.name}</span>
+                    </div>`;
+            }
+          },
+          {
+            label: "Status",
+            width: 80,
+            field: "status",
+            render: row => {
+              const statuses = ['未开始', '进行中', '已完成', '已暂停'];
+              const colors = ['#d9d9d9', '#1890ff', '#52c41a', '#faad14'];
+              const status = statuses[Math.floor(Math.random() * statuses.length)];
+              const color = colors[statuses.indexOf(status)];
+              return `<div style="width: 8px; height: 8px; border-radius: 50%; background: ${color}; margin: 0 auto;"></div>`;
+            }
+          },
+          {
+            label: "Progress",
+            width: 120,
+            field: "progress",
+            render: row => {
+              const p = `${(row.data.progress * 100) || 0}%`;
+              const progressValue = (row.data.progress * 100) || 0;
+              const color = progressValue >= 80 ? '#52c41a' : progressValue >= 50 ? '#1890ff' : progressValue >= 20 ? '#faad14' : '#ff4d4f';
+              return `<div style="display: flex; align-items: center; gap: 8px;">
+                      <div style="flex: 1; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden;">
+                        <div style="width: ${p}; height: 100%; background: ${color}; border-radius: 4px; transition: width 0.3s ease;"></div>
+                      </div>
+                      <span style="font-size: 11px; color: #666; min-width: 30px;">${p}</span>
+                    </div>`;
+            }
+          },
+          {
+            label: "Assignee",
+            width: 80,
+            field: "assignee",
+            render: row => {
+              const assignees = ['张三', '李四', '王五', '赵六', '钱七', '孙八'];
+              const assignee = assignees[Math.floor(Math.random() * assignees.length)];
+              const colors = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae', '#722ed1', '#eb2f96'];
+              const color = colors[assignees.indexOf(assignee)];
+              return `<div style="width: 28px; height: 28px; border-radius: 50%; background: ${color}; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; margin: 0 auto;">${assignee.charAt(0)}</div>`;
+            }
+          },
+          {
+            label: "Priority",
+            width: 70,
+            field: "priority",
+            render: row => {
+              const priorities = ['低', '中', '高', '紧急'];
+              const colors = ['#52c41a', '#faad14', '#ff7875', '#ff4d4f'];
+              const icons = ['●', '●', '●', '●'];
+              const priority = priorities[Math.floor(Math.random() * priorities.length)];
+              const color = colors[priorities.indexOf(priority)];
+              const icon = icons[priorities.indexOf(priority)];
+              return `<div style="text-align: center;">
+                      <span style="color: ${color}; font-size: 16px;">${icon}</span>
+                    </div>`;
+            }
+          },
+                    {
+            label: "时间管理",
             children: [
               { label: "Start Date", width: 100, field: "startDate" },
-              { label: "End Date", width: 100, field: "endDate" }
+              { label: "End Date", width: 100, field: "endDate" },
+              { 
+                label: "Duration", 
+                width: 80, 
+                field: "duration",
+                render: row => {
+                  const start = new Date(row.data.startDate);
+                  const end = new Date(row.data.endDate);
+                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+                  return `${days}天`;
+                }
+              }
             ]
           },
           {
-            label: "其他",
+            label: "项目信息",
+            children: [
+              { 
+                label: "Priority", 
+                width: 80, 
+                field: "priority",
+                render: row => {
+                  const priorities = ['低', '中', '高', '紧急'];
+                  const colors = ['#52c41a', '#faad14', '#ff7875', '#ff4d4f'];
+                  const priority = priorities[Math.floor(Math.random() * priorities.length)];
+                  const color = colors[priorities.indexOf(priority)];
+                  return `<span style="color: ${color}; font-weight: bold;">${priority}</span>`;
+                }
+              },
+              { 
+                label: "Status", 
+                width: 90, 
+                field: "status",
+                render: row => {
+                  const statuses = ['未开始', '进行中', '已完成', '已暂停'];
+                  const colors = ['#d9d9d9', '#1890ff', '#52c41a', '#faad14'];
+                  const status = statuses[Math.floor(Math.random() * statuses.length)];
+                  const color = colors[statuses.indexOf(status)];
+                  return `<span style="background: ${color}; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">${status}</span>`;
+                }
+              },
+              { 
+                label: "Progress", 
+                width: 100, 
+                field: "progress",
+                render: row => {
+                  const p = `${(row.data.progress * 100) || 0}%`;
+                  return `<div style="width: 100%; height: 16px; background: #f0f0f0; border-radius: 8px; position: relative;">
+                          <div style="width: ${p}; height: 100%; background: linear-gradient(90deg, #1890ff, #40a9ff); border-radius: 8px;"></div>
+                          <span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); font-size: 11px; line-height: 16px; color: #333;">${p}</span>
+                        </div>`;
+                }
+              }
+            ]
+          },
+          {
+            label: "团队协作",
+            children: [
+              { 
+                label: "Assignee", 
+                width: 100, 
+                field: "assignee",
+                render: row => {
+                  const assignees = ['张三', '李四', '王五', '赵六', '钱七', '孙八'];
+                  const assignee = assignees[Math.floor(Math.random() * assignees.length)];
+                  const colors = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae', '#722ed1', '#eb2f96'];
+                  const color = colors[assignees.indexOf(assignee)];
+                  return `<div style="display: flex; align-items: center;">
+                          <div style="width: 24px; height: 24px; border-radius: 50%; background: ${color}; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; margin-right: 6px;">${assignee.charAt(0)}</div>
+                          <span style="font-size: 12px;">${assignee}</span>
+                        </div>`;
+                }
+              },
+              { 
+                label: "Department", 
+                width: 90, 
+                field: "department",
+                render: row => {
+                  const departments = ['前端组', '后端组', '测试组', '产品组', '设计组', '运维组'];
+                  const department = departments[Math.floor(Math.random() * departments.length)];
+                  return `<span style="background: #f0f0f0; padding: 2px 8px; border-radius: 12px; font-size: 12px;">${department}</span>`;
+                }
+              }
+            ]
+          },
+          {
+            label: "质量指标",
+            children: [
+              { 
+                label: "Quality Score", 
+                width: 100, 
+                field: "quality",
+                render: row => {
+                  const score = Math.floor(Math.random() * 40) + 60; // 60-100分
+                  const color = score >= 90 ? '#52c41a' : score >= 80 ? '#faad14' : score >= 70 ? '#ff7875' : '#ff4d4f';
+                  return `<div style="display: flex; align-items: center;">
+                          <div style="width: 40px; height: 6px; background: #f0f0f0; border-radius: 3px; margin-right: 8px;">
+                            <div style="width: ${score}%; height: 100%; background: ${color}; border-radius: 3px;"></div>
+                          </div>
+                          <span style="font-size: 12px; color: ${color}; font-weight: bold;">${score}</span>
+                        </div>`;
+                }
+              },
+              { 
+                label: "Risk Level", 
+                width: 80, 
+                field: "risk",
+                render: row => {
+                  const risks = ['低风险', '中风险', '高风险'];
+                  const colors = ['#52c41a', '#faad14', '#ff4d4f'];
+                  const icons = ['✓', '⚠', '⚠'];
+                  const risk = risks[Math.floor(Math.random() * risks.length)];
+                  const color = colors[risks.indexOf(risk)];
+                  const icon = icons[risks.indexOf(risk)];
+                  return `<span style="color: ${color}; font-weight: bold;">${icon} ${risk}</span>`;
+                }
+              }
+            ]
+          },
+          {
+            label: "其他信息",
             children: [
               { label: "Field1", width: 60, field: "field1" },
               {
-                label: "二级菜单",
+                label: "扩展字段",
                 children: [
                   {
                     label: "Field2",
@@ -308,10 +491,19 @@ if (ganttContainer) {
                   },
                   {
                     label: "Field3",
-                    width: 50,
+                    width: 80,
                     field: "field3",
                     align: "right",
                     headerAlign: "left"
+                  },
+                  {
+                    label: "Budget",
+                    width: 90,
+                    field: "budget",
+                    render: row => {
+                      const budget = Math.floor(Math.random() * 50000) + 10000;
+                      return `<span style="color: #1890ff; font-weight: bold;">¥${budget.toLocaleString()}</span>`;
+                    }
                   }
                 ]
               }

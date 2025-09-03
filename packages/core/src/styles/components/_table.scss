@@ -2,7 +2,8 @@
   flex-shrink: 0;
   box-sizing: border-box;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -14,7 +15,8 @@
   border-bottom: 1px solid var(--x-gantt-border-color) !important;
   display: flex;
   flex-direction: row;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
   position: relative;
   flex-wrap: nowrap;
 
@@ -80,7 +82,8 @@
 // 表格体样式
 .x-gantt-table-body {
   flex: 1;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   box-sizing: border-box;
   position: relative;
   width: 100%;
