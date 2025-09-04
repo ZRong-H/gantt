@@ -1,8 +1,8 @@
 {
-  "name": "@xpyjs/gantt-vue",
+  "name": "@kingdee-xk/gantt-vue",
   "private": false,
   "version": "0.0.1-beta.0",
-  "description": "Vue wrapper for x-gantt",
+  "description": "Vue wrapper for x-gantt use in kingdee xk",
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
@@ -31,7 +31,7 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "@xpyjs/gantt-core": "workspace:*"
+    "@kingdee-xk/gantt-core": "workspace:*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
@@ -48,17 +48,17 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/xpyjs/gantt.git",
+    "url": "https://github.com/ZRong-H/gantt.git",
     "directory": "packages/vue"
   },
-  "homepage": "https://github.com/xpyjs/gantt#readme",
+  "homepage": "https://github.com/ZRong-H/gantt#readme",
   "bugs": {
-    "url": "https://github.com/xpyjs/gantt/issues"
+    "url": "https://github.com/ZRong-H/gantt/issues"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "author": "JeremyJone",
+  "author": "JeremyJone && Huang_Zengrong",
   "license": "MIT"
 }

@@ -1,8 +1,8 @@
 {
-  "name": "@xpyjs/gantt-core",
+  "name": "@kingdee-xk/gantt-core",
   "private": false,
   "version": "0.0.1-beta.0",
-  "description": "A powerful and flexible Gantt chart component library for modern web applications with TypeScript support",
+  "description": "A powerful and flexible Gantt chart component library for modern web applications with TypeScript support which is used in kingdee xk",
   "type": "module",
   "main": "./dist/x-gantt.umd.cjs",
   "module": "./dist/x-gantt.js",
@@ -60,12 +60,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xpyjs/gantt.git",
+    "url": "https://github.com/ZRong-H/gantt.git",
     "directory": "packages/core"
   },
-  "homepage": "https://github.com/xpyjs/gantt#readme",
+  "homepage": "https://github.com/ZRong-H/gantt#readme",
   "bugs": {
-    "url": "https://github.com/xpyjs/gantt/issues"
+    "url": "https://github.com/ZRong-H/gantt/issues"
   },
   "publishConfig": {
     "access": "public",
