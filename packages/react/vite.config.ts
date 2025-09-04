@@ -16,7 +16,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@xpyjs/gantt-core/style.css";`
+        additionalData: `@import "@huang_zengrong/kingdee-xk-gantt-core/style.css";`
       }
     }
   },
@@ -32,14 +32,14 @@ export default defineConfig({
         "react",
         "react-dom",
         "react/jsx-runtime",
-        "@xpyjs/gantt-core"
+        "@huang_zengrong/kingdee-xk-gantt-core"
       ],
       output: {
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
           "react/jsx-runtime": "jsxRuntime",
-          "@xpyjs/gantt-core": "XGanttCore"
+          "@huang_zengrong/kingdee-xk-gantt-core": "XGanttCore"
         },
         // 确保样式文件被正确导出
         assetFileNames: assetInfo => {

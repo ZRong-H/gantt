@@ -1,14 +1,14 @@
-import { XGantt, type IOptions } from "@xpyjs/gantt-core";
+import { XGantt, type IOptions } from "@huang_zengrong/kingdee-xk-gantt-core";
 import dayjs from "dayjs";
 // Import the type from the main package entry
 // import type { XGanttOptions } from "@xpyjs/gantt-core";
 // Import the core library's CSS. Make sure the path matches the export in core's package.json
-import "@xpyjs/gantt-core/index.css";
+import "@huang_zengrong/kingdee-xk-gantt-core/index.css";
 
 import "dayjs/locale/zh";
 import "dayjs/locale/ja";
 import "dayjs/locale/ko";
-import { ILink } from "@xpyjs/gantt-core";
+import { ILink } from "@huang_zengrong/kingdee-xk-gantt-core";
 
 const ganttContainer = document.getElementById("gantt1");
 

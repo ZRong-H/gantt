@@ -44,7 +44,7 @@ export type {
   Dayjs,
   Colorjs,
   XGanttUnit
-} from "@xpyjs/gantt-core";
+} from "@huang_zengrong/kingdee-xk-gantt-core";
 
 // 导出核心库的工具函数
-export { generateId, dayjs, colorjs } from "@xpyjs/gantt-core";
+export { generateId, dayjs, colorjs } from "@huang_zengrong/kingdee-xk-gantt-core";

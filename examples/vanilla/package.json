@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@xpyjs/gantt-core": "workspace:*",
+    "@huang_zengrong/kingdee-xk-gantt-core": "workspace:*",
     "dayjs": "^1.11.11"
   },
   "author": "Your Name <your.email@example.com>",

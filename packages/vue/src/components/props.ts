@@ -1,5 +1,5 @@
 import type { SlotsType } from "vue";
-import type { IOptions, ILink, ErrorType } from "@xpyjs/gantt-core";
+import type { IOptions, ILink, ErrorType } from "@huang_zengrong/kingdee-xk-gantt-core";
 
 export type XGanttVueEmits = {
   loaded: [];

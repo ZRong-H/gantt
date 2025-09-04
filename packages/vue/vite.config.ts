@@ -28,11 +28,11 @@ export default defineConfig({
       fileName: format => `index.${format === "es" ? "js" : "umd.cjs"}`
     },
     rollupOptions: {
-      external: ["vue", "@xpyjs/gantt-core"],
+      external: ["vue", "@huang_zengrong/kingdee-xk-gantt-core"],
       output: {
         globals: {
           vue: "Vue",
-          "@xpyjs/gantt-core": "XGanttCore"
+          "@huang_zengrong/kingdee-xk-gantt-core": "XGanttCore"
         }
       }
     }

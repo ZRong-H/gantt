@@ -23,11 +23,15 @@ export type {
   ErrorType,
   Dayjs,
   Colorjs,
-  XGanttUnit
-} from "@xpyjs/gantt-core";
+  XGanttUnit,
+} from "@huang_zengrong/kingdee-xk-gantt-core";
 
 // 重新导出核心库的工具函数
-export { generateId, dayjs, colorjs } from "@xpyjs/gantt-core";
+export {
+  generateId,
+  dayjs,
+  colorjs,
+} from "@huang_zengrong/kingdee-xk-gantt-core";
 
 // 默认导出
 export { XGanttReact as default } from "./components/XGanttReact";

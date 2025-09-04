@@ -5,20 +5,20 @@
  */
 
 import React, {
-    forwardRef,
-    useEffect,
-    useImperativeHandle,
-    useRef,
-    useCallback
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useCallback,
 } from "react";
-import { XGantt } from "@xpyjs/gantt-core";
+import { XGantt } from "@huang_zengrong/kingdee-xk-gantt-core";
 import type { XGanttReactProps, XGanttReactRef } from "../types";
-import "@xpyjs/gantt-core/style.css";
+import "@huang_zengrong/kingdee-xk-gantt-core/style.css";
 
 /**
  * XGantt React 组件
  *
- * @description 基于 `@xpyjs/gantt-core` 的 React 封装组件，提供完整的甘特图功能
+ * @description 基于 `@huang_zengrong/kingdee-xk-gantt-core` 的 React 封装组件，提供完整的甘特图功能
  *
  * @example
  * ```tsx
@@ -62,194 +62,198 @@ import "@xpyjs/gantt-core/style.css";
  * ```
  */
 export const XGanttReact = forwardRef<XGanttReactRef, XGanttReactProps>(
-    (props, ref) => {
-        const {
-            options,
-            className,
-            style,
-            onLoaded,
-            onError,
-            onUpdateLink,
-            onCreateLink,
-            onSelectLink,
-            onContextMenuLink,
-            onSelect,
-            onClickRow,
-            onDoubleClickRow,
-            onContextMenuRow,
-            onClickSlider,
-            onDoubleClickSlider,
-            onContextMenuSlider,
-            onMove,
-            onHoverSlider,
-            onLeaveSlider,
-            onClickBaseline,
-            onContextMenuBaseline,
-            onHoverBaseline,
-            onLeaveBaseline,
-            ...restProps
-        } = props;
+  (props, ref) => {
+    const {
+      options,
+      className,
+      style,
+      onLoaded,
+      onError,
+      onUpdateLink,
+      onCreateLink,
+      onSelectLink,
+      onContextMenuLink,
+      onSelect,
+      onClickRow,
+      onDoubleClickRow,
+      onContextMenuRow,
+      onClickSlider,
+      onDoubleClickSlider,
+      onContextMenuSlider,
+      onMove,
+      onHoverSlider,
+      onLeaveSlider,
+      onClickBaseline,
+      onContextMenuBaseline,
+      onHoverBaseline,
+      onLeaveBaseline,
+      ...restProps
+    } = props;
 
-        // 容器引用
-        const containerRef = useRef<HTMLDivElement>(null);
+    // 容器引用
+    const containerRef = useRef<HTMLDivElement>(null);
 
-        // 甘特图实例
-        const ganttInstanceRef = useRef<XGantt | null>(null);
+    // 甘特图实例
+    const ganttInstanceRef = useRef<XGantt | null>(null);
 
-        // 注册事件监听器
-        const registerEventListeners = useCallback(() => {
-            const instance = ganttInstanceRef.current;
-            if (!instance) return;
+    // 注册事件监听器
+    const registerEventListeners = useCallback(() => {
+      const instance = ganttInstanceRef.current;
+      if (!instance) return;
 
-            // 注册所有事件监听器
-            if (onLoaded) {
-                instance.on("loaded", onLoaded);
-            }
-            if (onError) {
-                instance.on("error", onError);
-            }
-            if (onUpdateLink) {
-                instance.on("update:link", onUpdateLink);
-            }
-            if (onCreateLink) {
-                instance.on("create:link", onCreateLink);
-            }
-            if (onSelectLink) {
-                instance.on("select:link", onSelectLink);
-            }
-            if (onContextMenuLink) {
-                instance.on("contextmenu:link", onContextMenuLink);
-            }
-            if (onSelect) {
-                instance.on("select", onSelect);
-            }
-            if (onClickRow) {
-                instance.on("click:row", onClickRow);
-            }
-            if (onDoubleClickRow) {
-                instance.on("dblclick:row", onDoubleClickRow);
-            }
-            if (onContextMenuRow) {
-                instance.on("contextmenu:row", onContextMenuRow);
-            }
-            if (onClickSlider) {
-                instance.on("click:slider", onClickSlider);
-            }
-            if (onDoubleClickSlider) {
-                instance.on("dblclick:slider", onDoubleClickSlider);
-            }
-            if (onContextMenuSlider) {
-                instance.on("contextmenu:slider", onContextMenuSlider);
-            }
-            if (onMove) {
-                instance.on("move", onMove);
-            }
-            if (onHoverSlider) {
-                instance.on("hover:slider", onHoverSlider);
-            }
-            if (onLeaveSlider) {
-                instance.on("leave:slider", onLeaveSlider);
-            }
-            if (onClickBaseline) {
-                instance.on("click:baseline", onClickBaseline);
-            }
-            if (onContextMenuBaseline) {
-                instance.on("contextmenu:baseline", onContextMenuBaseline);
-            }
-            if (onHoverBaseline) {
-                instance.on("hover:baseline", onHoverBaseline);
-            }
-            if (onLeaveBaseline) {
-                instance.on("leave:baseline", onLeaveBaseline);
-            }
-        }, [
-            onLoaded,
-            onError,
-            onUpdateLink,
-            onCreateLink,
-            onSelectLink,
-            onContextMenuLink,
-            onSelect,
-            onClickRow,
-            onDoubleClickRow,
-            onContextMenuRow,
-            onClickSlider,
-            onDoubleClickSlider,
-            onContextMenuSlider,
-            onMove,
-            onHoverSlider,
-            onLeaveSlider,
-            onClickBaseline,
-            onContextMenuBaseline,
-            onHoverBaseline,
-            onLeaveBaseline
-        ]);
+      // 注册所有事件监听器
+      if (onLoaded) {
+        instance.on("loaded", onLoaded);
+      }
+      if (onError) {
+        instance.on("error", onError);
+      }
+      if (onUpdateLink) {
+        instance.on("update:link", onUpdateLink);
+      }
+      if (onCreateLink) {
+        instance.on("create:link", onCreateLink);
+      }
+      if (onSelectLink) {
+        instance.on("select:link", onSelectLink);
+      }
+      if (onContextMenuLink) {
+        instance.on("contextmenu:link", onContextMenuLink);
+      }
+      if (onSelect) {
+        instance.on("select", onSelect);
+      }
+      if (onClickRow) {
+        instance.on("click:row", onClickRow);
+      }
+      if (onDoubleClickRow) {
+        instance.on("dblclick:row", onDoubleClickRow);
+      }
+      if (onContextMenuRow) {
+        instance.on("contextmenu:row", onContextMenuRow);
+      }
+      if (onClickSlider) {
+        instance.on("click:slider", onClickSlider);
+      }
+      if (onDoubleClickSlider) {
+        instance.on("dblclick:slider", onDoubleClickSlider);
+      }
+      if (onContextMenuSlider) {
+        instance.on("contextmenu:slider", onContextMenuSlider);
+      }
+      if (onMove) {
+        instance.on("move", onMove);
+      }
+      if (onHoverSlider) {
+        instance.on("hover:slider", onHoverSlider);
+      }
+      if (onLeaveSlider) {
+        instance.on("leave:slider", onLeaveSlider);
+      }
+      if (onClickBaseline) {
+        instance.on("click:baseline", onClickBaseline);
+      }
+      if (onContextMenuBaseline) {
+        instance.on("contextmenu:baseline", onContextMenuBaseline);
+      }
+      if (onHoverBaseline) {
+        instance.on("hover:baseline", onHoverBaseline);
+      }
+      if (onLeaveBaseline) {
+        instance.on("leave:baseline", onLeaveBaseline);
+      }
+    }, [
+      onLoaded,
+      onError,
+      onUpdateLink,
+      onCreateLink,
+      onSelectLink,
+      onContextMenuLink,
+      onSelect,
+      onClickRow,
+      onDoubleClickRow,
+      onContextMenuRow,
+      onClickSlider,
+      onDoubleClickSlider,
+      onContextMenuSlider,
+      onMove,
+      onHoverSlider,
+      onLeaveSlider,
+      onClickBaseline,
+      onContextMenuBaseline,
+      onHoverBaseline,
+      onLeaveBaseline,
+    ]);
 
-        // 初始化甘特图
-        const initGantt = useCallback(() => {
-            if (!containerRef.current) return;
+    // 初始化甘特图
+    const initGantt = useCallback(() => {
+      if (!containerRef.current) return;
 
-            // 创建甘特图实例
-            ganttInstanceRef.current = new XGantt(containerRef.current, options);
+      // 创建甘特图实例
+      ganttInstanceRef.current = new XGantt(containerRef.current, options);
 
-            // 注册事件监听器
-            registerEventListeners();
-        }, [options, registerEventListeners]);
+      // 注册事件监听器
+      registerEventListeners();
+    }, [options, registerEventListeners]);
 
-        // 跳转到指定日期
-        const jumpTo = useCallback((date?: any) => {
-            if (ganttInstanceRef.current) {
-                return ganttInstanceRef.current.jumpTo(date);
-            }
-            return false;
-        }, []);
+    // 跳转到指定日期
+    const jumpTo = useCallback((date?: any) => {
+      if (ganttInstanceRef.current) {
+        return ganttInstanceRef.current.jumpTo(date);
+      }
+      return false;
+    }, []);
 
-        // 销毁甘特图
-        const destroyGantt = useCallback(() => {
-            if (ganttInstanceRef.current) {
-                ganttInstanceRef.current.destroy();
-                ganttInstanceRef.current = null;
-            }
-        }, []);
+    // 销毁甘特图
+    const destroyGantt = useCallback(() => {
+      if (ganttInstanceRef.current) {
+        ganttInstanceRef.current.destroy();
+        ganttInstanceRef.current = null;
+      }
+    }, []);
 
-        // 暴露方法给父组件
-        useImperativeHandle(ref, () => ({
-            getInstance: () => ganttInstanceRef.current,
-            jumpTo
-        }), [jumpTo]);
+    // 暴露方法给父组件
+    useImperativeHandle(
+      ref,
+      () => ({
+        getInstance: () => ganttInstanceRef.current,
+        jumpTo,
+      }),
+      [jumpTo]
+    );
 
-        // 组件挂载时初始化
-        useEffect(() => {
-            initGantt();
+    // 组件挂载时初始化
+    useEffect(() => {
+      initGantt();
 
-            // 组件卸载时清理
-            return () => {
-                destroyGantt();
-            };
-        }, []); // 只在挂载时初始化一次
+      // 组件卸载时清理
+      return () => {
+        destroyGantt();
+      };
+    }, []); // 只在挂载时初始化一次
 
-        // 监听 options 变化
-        useEffect(() => {
-            if (ganttInstanceRef.current) {
-                ganttInstanceRef.current.update(options);
-            }
-        }, [options]);
+    // 监听 options 变化
+    useEffect(() => {
+      if (ganttInstanceRef.current) {
+        ganttInstanceRef.current.update(options);
+      }
+    }, [options]);
 
-        return (
-            <div
-                ref={containerRef}
-                data-testid="x-gantt-container"
-                className={`x-gantt-container ${className || ""}`}
-                style={{
-                    position: "relative",
-                    width: "100%",
-                    height: "100%",
-                    ...style
-                }}
-                {...restProps}
-            />
-        );
-    }
+    return (
+      <div
+        ref={containerRef}
+        data-testid="x-gantt-container"
+        className={`x-gantt-container ${className || ""}`}
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          ...style,
+        }}
+        {...restProps}
+      />
+    );
+  }
 );
 
 XGanttReact.displayName = "XGanttReact";

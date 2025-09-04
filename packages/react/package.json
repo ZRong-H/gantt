@@ -32,7 +32,7 @@
     "release": "pnpm publish --access public"
   },
   "dependencies": {
-    "@xpyjs/gantt-core": "workspace:*"
+    "@huang_zengrong/kingdee-xk-gantt-core": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

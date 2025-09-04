@@ -4,7 +4,7 @@
  * @Description: React wrapper types for XGantt
  */
 
-import type { IOptions, EventMap } from "@xpyjs/gantt-core";
+import type { IOptions, EventMap } from "@huang_zengrong/kingdee-xk-gantt-core";
 
 /**
  * XGanttReact 组件的 Props 类型
@@ -238,7 +238,9 @@ export interface XGanttReactRef {
    * };
    * ```
    */
-  getInstance: () => import("@xpyjs/gantt-core").XGantt | null;
+  getInstance: () =>
+    | import("@huang_zengrong/kingdee-xk-gantt-core").XGantt
+    | null;
 
   /**
    * 跳转到指定日期

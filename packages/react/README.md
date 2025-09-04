@@ -1,6 +1,6 @@
 # @xpyjs/gantt-react
 
-基于 [@xpyjs/gantt-core](../core/README.md) 的 React 甘特图组件。
+基于 [@huang_zengrong/kingdee-xk-gantt-core](../core/README.md) 的 React 甘特图组件。
 
 ## 安装
 
@@ -15,32 +15,32 @@ pnpm add @xpyjs/gantt-react
 ## 基本使用
 
 ```tsx
-import React, { useRef } from 'react';
-import { XGanttReact } from '@xpyjs/gantt-react';
-import type { XGanttReactRef } from '@xpyjs/gantt-react';
+import React, { useRef } from "react";
+import { XGanttReact } from "@xpyjs/gantt-react";
+import type { XGanttReactRef } from "@xpyjs/gantt-react";
 
 function App() {
   const ganttRef = useRef<XGanttReactRef>(null);
 
   const data = [
     {
-      id: '1',
-      name: '任务1',
-      startTime: '2024-01-01',
-      endTime: '2024-01-10',
-      progress: 50
+      id: "1",
+      name: "任务1",
+      startTime: "2024-01-01",
+      endTime: "2024-01-10",
+      progress: 50,
     },
     {
-      id: '2',
-      name: '任务2',
-      startTime: '2024-01-05',
-      endTime: '2024-01-15',
-      progress: 30
-    }
+      id: "2",
+      name: "任务2",
+      startTime: "2024-01-05",
+      endTime: "2024-01-15",
+      progress: 30,
+    },
   ];
 
   const handleTaskSelect = (data: any[], checked: boolean, all: any[]) => {
-    console.log('选择的任务:', data);
+    console.log("选择的任务:", data);
   };
 
   const jumpToToday = () => {
@@ -52,16 +52,16 @@ function App() {
       <button onClick={jumpToToday}>跳转到今天</button>
       <XGanttReact
         ref={ganttRef}
-        style={{ height: '500px', width: '100%' }}
+        style={{ height: "500px", width: "100%" }}
         options={{
           data,
           table: {
             width: 300,
             columns: [
-              { field: 'name', label: '任务名称', width: 200 },
-              { field: 'progress', label: '进度', width: 100 }
-            ]
-          }
+              { field: "name", label: "任务名称", width: 200 },
+              { field: "progress", label: "进度", width: 100 },
+            ],
+          },
         }}
         onSelect={handleTaskSelect}
       />
@@ -75,15 +75,15 @@ export default App;
 ## 使用 Hooks
 
 ```tsx
-import React from 'react';
-import { XGanttReact, useXGantt, useGanttEvents } from '@xpyjs/gantt-react';
+import React from "react";
+import { XGanttReact, useXGantt, useGanttEvents } from "@xpyjs/gantt-react";
 
 function MyGantt() {
   const { ganttRef, jumpToToday, updateGanttOptions } = useXGantt();
   const { onSelect, onClickRow, selectedTasks } = useGanttEvents();
 
   const handleChangeUnit = () => {
-    updateGanttOptions({ unit: 'week' });
+    updateGanttOptions({ unit: "week" });
   };
 
   return (
@@ -95,7 +95,7 @@ function MyGantt() {
       </div>
       <XGanttReact
         ref={ganttRef}
-        style={{ height: '500px' }}
+        style={{ height: "500px" }}
         options={{ data: [] }}
         onSelect={onSelect}
         onClickRow={onClickRow}
@@ -109,30 +109,30 @@ function MyGantt() {
 
 ### XGanttReact Props
 
-| 属性 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| options | `IOptions` | ✓ | 甘特图配置选项，变化时自动更新甘特图 |
-| className | `string` | - | 容器类名 |
-| style | `React.CSSProperties` | - | 容器样式 |
-| onError | `EventMap['error']` | - | 错误事件回调 |
-| onUpdateLink | `EventMap['update:link']` | - | 关联线更新事件回调 |
-| onCreateLink | `EventMap['create:link']` | - | 关联线创建事件回调 |
-| onSelectLink | `EventMap['select:link']` | - | 关联线选择事件回调 |
-| onSelect | `EventMap['select']` | - | 任务选择事件回调 |
-| onClickRow | `EventMap['click:row']` | - | 行点击事件回调 |
-| onDoubleClickRow | `EventMap['dblclick:row']` | - | 行双击事件回调 |
-| onContextMenuRow | `EventMap['contextmenu:row']` | - | 行右键菜单事件回调 |
-| onClickSlider | `EventMap['click:slider']` | - | 任务条点击事件回调 |
-| onDoubleClickSlider | `EventMap['dblclick:slider']` | - | 任务条双击事件回调 |
-| onContextMenuSlider | `EventMap['contextmenu:slider']` | - | 任务条右键菜单事件回调 |
-| onMove | `EventMap['move']` | - | 任务移动事件回调 |
+| 属性                | 类型                             | 必填 | 说明                                 |
+| ------------------- | -------------------------------- | ---- | ------------------------------------ |
+| options             | `IOptions`                       | ✓    | 甘特图配置选项，变化时自动更新甘特图 |
+| className           | `string`                         | -    | 容器类名                             |
+| style               | `React.CSSProperties`            | -    | 容器样式                             |
+| onError             | `EventMap['error']`              | -    | 错误事件回调                         |
+| onUpdateLink        | `EventMap['update:link']`        | -    | 关联线更新事件回调                   |
+| onCreateLink        | `EventMap['create:link']`        | -    | 关联线创建事件回调                   |
+| onSelectLink        | `EventMap['select:link']`        | -    | 关联线选择事件回调                   |
+| onSelect            | `EventMap['select']`             | -    | 任务选择事件回调                     |
+| onClickRow          | `EventMap['click:row']`          | -    | 行点击事件回调                       |
+| onDoubleClickRow    | `EventMap['dblclick:row']`       | -    | 行双击事件回调                       |
+| onContextMenuRow    | `EventMap['contextmenu:row']`    | -    | 行右键菜单事件回调                   |
+| onClickSlider       | `EventMap['click:slider']`       | -    | 任务条点击事件回调                   |
+| onDoubleClickSlider | `EventMap['dblclick:slider']`    | -    | 任务条双击事件回调                   |
+| onContextMenuSlider | `EventMap['contextmenu:slider']` | -    | 任务条右键菜单事件回调               |
+| onMove              | `EventMap['move']`               | -    | 任务移动事件回调                     |
 
 ### XGanttReactRef 方法
 
-| 方法 | 参数 | 返回值 | 说明 |
-|------|------|--------|------|
-| getInstance | - | `XGantt \| null` | 获取甘特图核心实例，通过实例可调用所有核心方法 |
-| jumpTo | `date?: any` | `boolean` | 跳转到指定日期（不传参数跳转到今天） |
+| 方法        | 参数         | 返回值           | 说明                                           |
+| ----------- | ------------ | ---------------- | ---------------------------------------------- |
+| getInstance | -            | `XGantt \| null` | 获取甘特图核心实例，通过实例可调用所有核心方法 |
+| jumpTo      | `date?: any` | `boolean`        | 跳转到指定日期（不传参数跳转到今天）           |
 
 ### Hooks
 
@@ -158,8 +158,8 @@ function MyGantt() {
 ## 使用核心实例进行高级操作
 
 ```tsx
-import React, { useRef } from 'react';
-import { XGanttReact, useXGantt } from '@xpyjs/gantt-react';
+import React, { useRef } from "react";
+import { XGanttReact, useXGantt } from "@xpyjs/gantt-react";
 
 function AdvancedGantt() {
   const { ganttRef, getInstance } = useXGantt();
@@ -169,15 +169,15 @@ function AdvancedGantt() {
     if (instance) {
       // 更新配置
       instance.update({
-        unit: 'week',
-        primaryColor: '#007acc'
+        unit: "week",
+        primaryColor: "#007acc",
       });
 
       // 手动渲染
       instance.render();
 
       // 其他核心方法
-      instance.jumpTo('2024-06-01');
+      instance.jumpTo("2024-06-01");
     }
   };
 
@@ -201,8 +201,8 @@ import type {
   ErrorType,
   EventMap,
   XGanttReactProps,
-  XGanttReactRef
-} from '@xpyjs/gantt-react';
+  XGanttReactRef,
+} from "@xpyjs/gantt-react";
 ```
 
 ## 样式

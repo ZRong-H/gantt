@@ -4,9 +4,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
-import { XGantt } from "@xpyjs/gantt-core";
+import { XGantt } from "@huang_zengrong/kingdee-xk-gantt-core";
 import { XGanttVueProps, XGanttVueEmits } from "./props";
-import "@xpyjs/gantt-core/style.css";
+import "@huang_zengrong/kingdee-xk-gantt-core/style.css";
 
 /**
  * 甘特图组件的 props 类型
