@@ -1,7 +1,7 @@
 {
   "name": "@huang_zengrong/kingdee-xk-gantt-vue",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vue wrapper for x-gantt use in kingdee xk",
   "type": "module",
   "main": "./dist/index.umd.cjs",
@@ -31,7 +31,7 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "@huang_zengrong/kingdee-xk-gantt-core": "workspace:*"
+    "@huang_zengrong/kingdee-xk-gantt-core": "^1.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
