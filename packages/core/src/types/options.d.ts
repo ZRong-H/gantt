@@ -3,6 +3,7 @@ import { IChartOptions } from "./chart";
 import { ILink } from "./link";
 import { IPattern } from "./styles";
 import { ITableOptions } from "./table";
+import { ITooltipOptions } from "./tooltip";
 
 export type XGanttUnit = "hour" | "day" | "week" | "month" | "quarter";
 export type TaskType = "task" | "milestone" | "summary";
@@ -505,6 +506,9 @@ export interface IGanttOptions {
 
   /** 图表配置 */
   chart: IChartOptions;
+
+  /** 悬浮卡片配置 */
+  tooltip?: ITooltipOptions;
 
   /** 整体的边框，以及纵向网格线 */
   border: {

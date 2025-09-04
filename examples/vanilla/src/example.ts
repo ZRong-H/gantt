@@ -9,6 +9,7 @@ import "dayjs/locale/zh";
 import "dayjs/locale/ja";
 import "dayjs/locale/ko";
 import { ILink } from "@huang_zengrong/kingdee-xk-gantt-core";
+import { Task } from "node_modules/@huang_zengrong/kingdee-xk-gantt-core/src/models/Task";
 
 const ganttContainer = document.getElementById("gantt1");
 
@@ -580,7 +581,18 @@ if (ganttContainer) {
         }
       },
       // holiday,
-      flag
+      flag,
+      tooltip: {
+        render: (task: Task) => {
+          return {
+            title: task.name,
+            content: `
+              <p style="text-align: left;">开始时间: ${task.startTime}</p>
+              <p style="text-align: left;">结束时间: ${task.endTime}</p>
+            `
+          };
+        }
+      }
     });
     console.log("XGantt instance created:", gantt);
 

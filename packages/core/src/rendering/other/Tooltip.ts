@@ -36,6 +36,11 @@ export class Tooltip {
     this.titleElement.className = "x-gantt-tooltip-title";
     this.contentElement.className = "x-gantt-tooltip-content";
 
+    // 设置默认样式
+    this.element.style.textAlign = "left";
+    this.titleElement.style.textAlign = "left";
+    this.contentElement.style.textAlign = "left";
+
     this.element.appendChild(this.titleElement);
     this.element.appendChild(this.contentElement);
 
@@ -59,13 +64,33 @@ export class Tooltip {
     });
   }
 
-  public show(event: MouseEvent, task: Task): void {
-    this.titleElement.innerText = task.name;
+  private defaultRender(task: Task): { title: string; content: string } {
     const dateFormat = this.context.getOptions().dateFormat;
-    this.contentElement.innerHTML = `
-      <p>Start: ${task.startTime?.format(dateFormat)}</p>
-      <p>End: ${task.endTime?.format(dateFormat)}</p>
-    `;
+    return {
+      title: task.name,
+      content: `
+        <p style="text-align: left;">Start: ${task.startTime?.format(dateFormat)}</p>
+        <p style="text-align: left;">End: ${task.endTime?.format(dateFormat)}</p>
+      `
+    };
+  }
+
+  public show(event: MouseEvent, task: Task): void {
+    const options = this.context.getOptions();
+    const tooltipRender = options.tooltip?.render;
+
+    let content;
+    if (tooltipRender) {
+      content = tooltipRender(task);
+      if (typeof content === "string") {
+        content = { title: task.name, content };
+      }
+    } else {
+      content = this.defaultRender(task);
+    }
+
+    this.titleElement.innerText = content.title;
+    this.contentElement.innerHTML = content.content;
     this.element.style.display = "block";
     this.visible = true;
     this.updatePosition(event);
