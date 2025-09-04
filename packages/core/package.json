@@ -1,7 +1,7 @@
 {
-  "name": "@kingdee-xk/gantt-core",
+  "name": "@huang_zengrong/kingdee-xk-gantt-core",
   "private": false,
-  "version": "0.0.1-beta.0",
+  "version": "1.0.0",
   "description": "A powerful and flexible Gantt chart component library for modern web applications with TypeScript support which is used in kingdee xk",
   "type": "module",
   "main": "./dist/x-gantt.umd.cjs",

@@ -1,7 +1,7 @@
 {
-  "name": "@kingdee-xk/gantt-vue",
+  "name": "@huang_zengrong/kingdee-xk-gantt-vue",
   "private": false,
-  "version": "0.0.1-beta.0",
+  "version": "1.0.0",
   "description": "Vue wrapper for x-gantt use in kingdee xk",
   "type": "module",
   "main": "./dist/index.umd.cjs",
