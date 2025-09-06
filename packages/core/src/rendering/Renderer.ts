@@ -251,7 +251,7 @@ export class Renderer {
   }
 
   // 更新尺寸
-  private updateSize = () => {
+  public updateSize = () => {
     // 根据最新的数据重新计算尺寸
     this.width =
       this.context.store.getOptionManager().getOptions().width ||

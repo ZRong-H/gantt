@@ -64,6 +64,55 @@ export class XGanttContext implements IContext {
 
   // *** Public API Methods ***/
 
+  /**
+   * 获取甘特图实例的唯一标识符
+   * @returns {string} 实例ID
+   */
+  public getId(): string {
+    return this._id;
+  }
+
+  /**
+   * 获取当前选中的任务列表
+   * @returns {any[]} 选中的任务数据列表
+   */
+  public getSelectedTasks(): any[] {
+    return this.store.getDataManager().getCheckedList().map(t => t.data);
+  }
+
+  /**
+   * 手动选中指定任务
+   * @param {string[]} taskIds 要选中的任务ID列表
+   */
+  public selectTasks(taskIds: string[]): void {
+    const tasks = taskIds
+      .map(id => this.store.getDataManager().getTaskById(id))
+      .filter(task => task !== null) as Task[];
+    
+    tasks.forEach(task => {
+      this.store.getDataManager().checkTask(task, true);
+    });
+  }
+
+  /**
+   * 取消选中所有任务
+   */
+  public clearSelection(): void {
+    this.store.getDataManager().clearChecked();
+  }
+
+  /**
+   * 获取当前时间轴的可见时间范围
+   * @returns {{ start: Date, end: Date }} 可见时间范围
+   */
+  public getVisibleTimeRange(): { start: Date; end: Date } {
+    const timeAxis = this.store.getTimeAxis();
+    return {
+      start: timeAxis.getStartTime().toDate(),
+      end: timeAxis.getEndTime().toDate()
+    };
+  }
+
   public render(): void {
     // 调用渲染器的 render 方法
     this.renderer.render();
@@ -73,6 +122,52 @@ export class XGanttContext implements IContext {
     this.setOptions(newOptions, config);
     Logger.debug("GanttChart options updated");
     this.render(); // 重新渲染
+  }
+
+  /**
+   * 获取所有任务数据
+   * @returns {any[]} 所有任务数据列表
+   */
+  public getAllTasks(): any[] {
+    return this.store.getDataManager().getAllTasks().map(t => t.data);
+  }
+
+  /**
+   * 根据ID获取任务数据
+   * @param {string} taskId 任务ID
+   * @returns {any | null} 任务数据，如果未找到则返回null
+   */
+  public getTaskById(taskId: string): any | null {
+    const task = this.store.getDataManager().getTaskById(taskId);
+    return task ? task.data : null;
+  }
+
+  /**
+   * 更新任务数据
+   * @param {string} taskId 任务ID
+   * @param {any} newData 新的任务数据
+   * @returns {boolean} 是否更新成功
+   */
+  public updateTask(taskId: string, newData: any): boolean {
+    const task = this.store.getDataManager().getTaskById(taskId);
+    if (!task) return false;
+
+    Object.assign(task.data, newData);
+    this.render();
+    return true;
+  }
+
+  /**
+   * 删除指定任务
+   * @param {string} taskId 要删除的任务ID
+   * @returns {boolean} 是否删除成功
+   */
+  public deleteTask(taskId: string): boolean {
+    const success = this.store.getDataManager().removeTask(taskId);
+    if (success) {
+      this.render();
+    }
+    return success;
   }
 
   public destroy(): void {
@@ -91,6 +186,19 @@ export class XGanttContext implements IContext {
    * 跳转到指定日期。默认为今天
    *
    * @return {boolean} 是否成功跳转
+   */
+  /**
+   * 手动触发甘特图大小调整，用于容器大小变化时更新视图
+   */
+  public resize(): void {
+    this.renderer.updateSize();
+    this.render();
+  }
+
+  /**
+   * 跳转到指定日期。默认为今天
+   * @param {any} date - 要跳转到的日期
+   * @returns {boolean} 是否成功跳转
    */
   public jumpTo(date?: any): boolean {
     const day = dayjs(date);
