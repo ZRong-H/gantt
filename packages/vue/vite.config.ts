@@ -33,6 +33,11 @@ export default defineConfig({
         globals: {
           vue: "Vue",
           "@huang_zengrong/kingdee-xk-gantt-core": "XGanttCore"
+        },
+        assetFileNames: assetInfo => {
+          const assetsFileType = assetInfo.name?.split(".")[1];
+          if (assetsFileType === "css") return "style.css";
+          return assetInfo.name || "";
         }
       }
     }
