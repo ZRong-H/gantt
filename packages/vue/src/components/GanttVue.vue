@@ -106,6 +106,13 @@ defineExpose({
     if (ganttInstance) {
       ganttInstance.jumpTo(date);
     }
+  },
+
+  /** resize */
+  resize: () => {
+    if (ganttInstance) {
+      ganttInstance.resize();
+    }
   }
 });
 
