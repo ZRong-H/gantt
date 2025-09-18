@@ -232,6 +232,10 @@ export class XGantt {
     return this.context.jumpTo(date);
   }
 
+  public resize(): void {
+    this.context.resize();
+  }
+
   /**
    * 注册事件监听器
    *

@@ -325,8 +325,6 @@ export class BodyGroup {
 
     const task = this.getTaskByPosition(pos);
     if (task) {
-      if (this.context.store.getDataManager().isTaskSelected(task.id)) return;
-
       this.context.store.getDataManager().selectTask(task.id);
       this.context.event.emit(EventName.ROW_CLICK, e.evt, task);
     }
