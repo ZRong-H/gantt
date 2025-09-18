@@ -1,7 +1,7 @@
 {
   "name": "@huang_zengrong/kingdee-xk-gantt-vue",
   "private": false,
-  "version": "1.1.2",
+  "version": "1.1.5",
   "description": "Vue wrapper for x-gantt use in kingdee xk",
   "type": "module",
   "main": "./dist/index.umd.cjs",
@@ -30,9 +30,6 @@
   "peerDependencies": {
     "vue": "^3.0.0"
   },
-  "dependencies": {
-    "@huang_zengrong/kingdee-xk-gantt-core": "^1.1.1"
-  },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
     "vue": "^3.4.0"
@@ -60,5 +57,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "author": "JeremyJone && Huang_Zengrong",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@huang_zengrong/kingdee-xk-gantt-core": "^1.1.5"
+  }
 }

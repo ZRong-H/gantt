@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed } from "vue";
-import { XGanttVue, XGanttUnit } from "@xpyjs/gantt-vue";
-import "@xpyjs/gantt-vue/style.css";
+import { XGanttVue, XGanttUnit } from "@huang_zengrong/kingdee-xk-gantt-vue";
+import "@huang_zengrong/kingdee-xk-gantt-vue/style.css";
 
 const viewMode = ref<XGanttUnit>("week");
 const lastAction = ref("页面已加载");

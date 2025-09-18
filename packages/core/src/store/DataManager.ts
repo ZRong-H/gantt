@@ -427,8 +427,9 @@ export class DataManager {
       return false;
     }
 
-    // 如果已经是选中状态则不做处理
+    // 如果已经是选中状态，仍然触发选中事件（支持重复点击）
     if (this.selectedTaskId === taskId) {
+      this.event.emit(EventName.TASK_SELECTED, task);
       return true;
     }
 

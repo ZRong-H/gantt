@@ -61,9 +61,9 @@
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import { type XGanttInstance, type IOptions } from "@xpyjs/gantt-vue";
-import XGanttVue from "@xpyjs/gantt-vue";
-import "@xpyjs/gantt-vue/style.css";
+import { type XGanttInstance, type IOptions } from "@huang_zengrong/kingdee-xk-gantt-vue";
+import XGanttVue from "@huang_zengrong/kingdee-xk-gantt-vue";
+import "@huang_zengrong/kingdee-xk-gantt-vue/style.css";
 
 // 甘特图引用
 const ganttRef = ref<XGanttInstance>();

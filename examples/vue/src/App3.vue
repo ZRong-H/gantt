@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { XGanttVue, dayjs, type XGanttVueProps, type XGanttVueEmits, } from "@xpyjs/gantt-vue";
-import "@xpyjs/gantt-vue/style.css";
+import { XGanttVue, dayjs, type XGanttVueProps, type XGanttVueEmits, } from "@huang_zengrong/kingdee-xk-gantt-vue";
+import "@huang_zengrong/kingdee-xk-gantt-vue/style.css";
 const startDate = dayjs("2024-1-1");
 const endDate = dayjs("2025-2-1");
 
